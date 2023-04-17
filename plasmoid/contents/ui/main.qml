@@ -6,6 +6,8 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
+// import de.davidhi.ddcci_brightness 1.0
+
 Item {
     id: root
     // Do never apply new values if one slider is not released yet
@@ -86,6 +88,13 @@ Item {
         function updateCommand() {
             command = `${plasmoid.configuration.executable} detect`;
             oneoffCommand = `ONCE=1 ${command}`;
+        }
+    }
+
+    DdcciExtension {
+        id: kscreen_dbus
+        onKscreenConfigChanged: function () {
+            monitorDataSource.runOnce();
         }
     }
 
